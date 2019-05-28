@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block containt %}
+<!-- PAGE TITLE -->
+<div class="eskimo-page-title">
+    <h1><span>{{ title_info.title }}</span></h1>
+    <p class="eskimo-page-subtitle">{{ title_info.description }}</p>
+</div>
+<!-- BLOG POSTS -->
+<div class="eskimo-masonry-grid">
+    <div class="eskimo-two-columns" data-columns>
+        {% for item in p.object_list %}
+                    <div class="card-masonry">
+                    <div class="card">
+                        <a href="/{{ item.article_blog.blog_id }}/{{ item.article_id }}">
+                            <img class="card-vertical-img" src="{{ base_dir }}/{{ item.article_picture }}" />
+                        </a>
+                        <div class="card-border">
+                            <div class="card-body" style="width: 415.5px;height: 249px">
+                                <div class="card-category">
+                                    <span><a href="{{ item.article_category.category_id }}">{{ item.get_article_type_id_display }}</a></span>
+                                </div>
+                                <h3 class="card-title">
+                                    <a href="/{{ item.article_blog.blog_id }}/{{ item.article_id }}">{{ item.article_title }}</a>
+                                </h3>
+                                <p>{{ item.article_summary }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="eskimo-author-meta">
+                                    By <a class="author-meta" href="author.html">{{ item.article_blog.blog_user.userinfo_name }}</a>
+                                </div>
+                                <div class="eskimo-date-meta">
+                                    <a href="single-post.html">{{ item.article_create_time }}</a>
+                                </div>
+                                <div class="eskimo-reading-meta"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+    </div>
+</div>
+<!-- PAGINATION -->
+<div class="eskimo-pager">
+    <ul class='pagination flex-wrap'>
+        {% for item in page_range %}
+            {% if current_page == item %}
+                <li class='page-item active'><a class='page-link' href='{{ reverse_url }}?page={{ item }}'>{{ item }}</a></li>
+            {% else %}
+                <li class='page-item'><a class='page-link' href='{{ reverse_url }}?page={{ item }}'>{{ item }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if p.has_next %}
+            <li class='page-item'><a class='page-link' href="{{ reverse_url }}?page={{ p.next_page_number }}"><i class="fa fa-chevron-right"></i></a></li>
+        {% endif %}
+
+{#        <li class='page-item active'><a class='page-link' href='#'>1</a></li>#}
+{#        <li class='page-item'><a class='page-link' href='#'>2</a></li>#}
+{#        <li class='page-item'><a class='page-link' href='#'>3</a></li>#}
+{#        <li class='page-item'><a class='page-link' href="#"><i class="fa fa-chevron-right"></i></a></li>#}
+    </ul>
+</div>
+<div class="clearfix"></div>
+{% endblock %}

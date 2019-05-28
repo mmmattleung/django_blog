@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block link %}
+    <link href="{{ base_dir }}/static/css/featherlight.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block containt %}
+    <h2>Three Column</h2>
+    <p>Possumus e aute sed se litteris in aliquip, a tamen quem qui pariatur ex pariatur nam nulla possumus, magna do nostrud non quid qui cernantur eram aliqua e illum labore proident consequat.</p>
+    <!-- IMAGE GALLERY -->
+    <div class="eskimo-masonry-grid eskimo-gallery">
+        <div class="eskimo-three-columns" data-columns>
+            <!-- GALLERY ITEM 1 -->
+            <div class="eskimo-gallery-item">
+                <a href="#" data-featherlight="{{ base_dir }}/static/uploads/2018/05/blog18.jpg" class="eskimo-lightbox">
+                    <img src="{{ base_dir }}/static/uploads/2018/05/blog18-900x600.jpg" alt="" />
+                </a>
+            </div>
+            <!-- GALLERY ITEM 2 -->
+            <div class="eskimo-gallery-item">
+                <a href="#" data-featherlight="{{ base_dir }}/static/uploads/2018/05/blog1.jpg" class="eskimo-lightbox">
+                    <img src="{{ base_dir }}/static/uploads/2018/05/blog1-900x600.jpg" alt="" />
+                </a>
+            </div>
+            <!-- GALLERY ITEM 3 -->
+            <div class="eskimo-gallery-item">
+                <a href="#" data-featherlight="{{ base_dir }}/static/uploads/2018/05/blog.jpg" class="eskimo-lightbox">
+                    <img src="{{ base_dir }}/static/uploads/2018/05/blog-900x600.jpg" alt="" />
+                </a>
+            </div>
+            <!-- GALLERY ITEM 4 -->
+            <div class="eskimo-gallery-item">
+                <a href="#" data-featherlight="{{ base_dir }}/static/uploads/2018/05/blog2.jpg" class="eskimo-lightbox">
+                    <img src="{{ base_dir }}/static/uploads/2018/05/blog2-900x600.jpg" alt="" />
+                </a>
+            </div>
+            <!-- GALLERY ITEM 5 -->
+            <div class="eskimo-gallery-item">
+                <a href="#" data-featherlight="{{ base_dir }}/static/uploads/2018/05/blog14.jpg" class="eskimo-lightbox">
+                    <img src="{{ base_dir }}/static/uploads/2018/05/blog14-900x600.jpg" alt="" />
+                </a>
+            </div>
+            <!-- GALLERY ITEM 6 -->
+            <div class="eskimo-gallery-item">
+                <a href="#" data-featherlight="{{ base_dir }}/static/uploads/2018/05/blog3.jpg" class="eskimo-lightbox">
+                    <img src="{{ base_dir }}/static/uploads/2018/05/blog3-900x600.jpg" alt="" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- DIVIDER -->
+{% endblock %}
+
+{% block js %}
+    <script src="{{ base_dir }}/static/js/featherlight.js"></script>
+{% endblock %}

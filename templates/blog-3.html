@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block containt %}
+
+<!-- PAGE TITLE -->
+<div class="eskimo-page-title">
+    <h1 class="no-border">Blog</h1>
+</div>
+<!-- BLOG POSTS -->
+<div class="eskimo-masonry-grid small-masonry">
+    <div class="eskimo-three-columns" data-columns>
+        <!-- POST 1 -->
+        {% for item in p.object_list %}
+            <div class="card-masonry card-small">
+            <div class="card">
+                <a href="/{{ item.article_blog.blog_id }}/{{ item.article_id }}">
+                    <img class="card-vertical-img" src="{{ base_dir }}/{{ item.article_picture }}" />
+                </a>
+                <div class="card-border">
+                    <div class="card-body">
+                        <div class="card-category">
+                            <a href="single-post.html">{{ item.article_create_time }}</a>
+                        </div>
+                        <h5 class="card-title" style="width: 221.66px;height: 60px">
+                            <a href="single-post.html">{{ item.article_title }}</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- PAGINATION -->
+<div class="eskimo-pager">
+    <ul class='pagination flex-wrap'>
+        {% for item in page_range %}
+            {% if current_page == item %}
+                <li class='page-item active'><a class='page-link' href='{{ reverse_url }}?page={{ item }}'>{{ item }}</a></li>
+            {% else %}
+                <li class='page-item'><a class='page-link' href='{{ reverse_url }}?page={{ item }}'>{{ item }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if p.has_next %}
+            <li class='page-item'><a class='page-link' href="{{ reverse_url }}?page={{ p.next_page_number }}"><i class="fa fa-chevron-right"></i></a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="clearfix"></div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="../static/js/salvattore.min.js"></script>
+    <script src="../static/js/panel.js"></script>
+    <script src="../static/js/reading-position-indicator.js"></script>
+    <script src="../static/js/custom.js"></script>
+{% endblock %}
