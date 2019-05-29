@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^comment/', views.comment),
     url(r'^(?P<article_blog>\d+)/blog/', views.blog_3colums, name="blog"),
     url(r'^(\w+)/', views.blog),
+    url(r'^$', views.index),
 
 ]

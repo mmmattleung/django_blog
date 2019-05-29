@@ -512,7 +512,8 @@ def github(request, *args, **kwargs):
     print(hashhex)
     if hmac.compare_digest(hashhex, signature): 
         a = "git --git-dir=/home/django_blog/.git  --work-tree=/home/django_blog pull"
-        multi_task = subprocess.Popen(a, shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        multi_task = subprocess.Popen(
+	        a, shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         print(multi_task.stdout.read())
         print(multi_task.stderr.read())
     else:
