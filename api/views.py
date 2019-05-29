@@ -497,6 +497,7 @@ def galleries(request, *args, **kwargs):
 
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 import hmac
+import subprocess
 @csrf_exempt
 def github(request, *args, **kwargs):
     signature = request.META.get('HTTP_X_HUB_SIGNATURE')
@@ -511,10 +512,9 @@ def github(request, *args, **kwargs):
     print(hashhex)
     if hmac.compare_digest(hashhex, signature): 
         a = "git --git-dir=/home/django_blog/.git  --work-tree=/home/django_blog pull"
-	    multi_task = subprocess.Popen(
-	        a, shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	    print(multi_task.stdout.read())
-	    print(multi_task.stderr.read())
+        multi_task = subprocess.Popen(a, shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print(multi_task.stdout.read())
+        print(multi_task.stderr.read())
     else:
         print("NO")
     return HttpResponse(123)
