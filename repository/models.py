@@ -27,6 +27,9 @@ class UserInfo(models.Model):
     userinfo_education_and_experience = models.TextField(verbose_name="教育和经验", blank=True, null=True)
     userinfo_portfolo = models.TextField(verbose_name="作品", blank=True, null=True)
 
+    def __str__(self):
+        return "%s - %s" % (self.userinfo_id, self.userinfo_name)
+
 
 class Blog(models.Model):
     """
@@ -38,6 +41,8 @@ class Blog(models.Model):
     blog_theme = models.CharField(verbose_name='博客主题', max_length=32)
     blog_user = models.OneToOneField(to='UserInfo', to_field='userinfo_id')
 
+    def __str__(self):
+        return "%s - %s" % (self.blog_title, self.blog_site)
 
 class UserFans(models.Model):
     """
@@ -61,6 +66,8 @@ class Category(models.Model):
 
     category_blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='blog_id')
 
+    def __str__(self):
+        return "%s - %s" % (self.category_id, self.category_title)
 
 class ArticleDetail(models.Model):
     """
@@ -103,6 +110,8 @@ class Tag(models.Model):
     tag_title = models.CharField(verbose_name='标签名称', max_length=32)
     tag_blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='blog_id')
 
+    def __str__(self):
+        return "%s - %s" % (self.tag_id, self.tag_title)
 
 class Article(models.Model):
     article_id = models.BigAutoField(primary_key=True)
@@ -132,6 +141,10 @@ class Article(models.Model):
         through='Article2Tag',
         through_fields=('article', 'tag'),
     )
+
+    def __str__(self):
+        return "%s - %s" % (self.article_id, self.article_title)
+
 
 
 class Article2Tag(models.Model):
