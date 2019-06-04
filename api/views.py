@@ -230,8 +230,8 @@ def article(request, *args, **kwargs):
     articles = models.Article.objects.filter(article_blog=kwargs["article_blog"]).all()
     pre = None
     after = None
-
-    for i in range(0, len(articles)-1):
+    
+    for i in range(0, len(articles)):
         if articles[i].article_id == int(kwargs["article_id"]):
             if i != 0:
                 pre = articles[i-1]
