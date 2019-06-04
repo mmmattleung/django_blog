@@ -9,7 +9,7 @@ from django.db.models import functions
 from django.utils.html import mark_safe
 from django.shortcuts import render, HttpResponse, redirect
 
-from utils import pager
+from utils import pager, markdown_ex
 from repository import models
 from markdown import markdown
 from utils import random_check_code
@@ -230,13 +230,14 @@ def article(request, *args, **kwargs):
     articles = models.Article.objects.filter(article_blog=kwargs["article_blog"]).all()
     pre = None
     after = None
-    for i in range(0, len(articles)):
+    
+    for i in range(0, len(articles)-1):
         if articles[i].article_id == int(kwargs["article_id"]):
             if i != 0:
                 pre = articles[i-1]
             else:
                 pre = None
-            if i < len(articles):
+            if i < len(articles)-1:
                 after = articles[i+1]
             else:
                 after = None
@@ -247,9 +248,12 @@ def article(request, *args, **kwargs):
     }
 
     tags = models.Article2Tag.objects.filter(article=kwargs["article_id"]).all()
-    content = mark_safe(markdown(article[0]["articledetail__articledeatail_content"], safe_mode='escape'))
 
-    # test
+    configs = {}
+    myext = markdown_ex.CodeExtension(configs=configs)
+    content = mark_safe(markdown(article[0]["articledetail__articledeatail_content"], extensions=[myext]))
+    # content = mark_safe(markdown(article[0]["articledetail__articledeatail_content"]))
+
     comments = models.Comment.objects.filter(comment_article=1).values(
         "comment_id",
         "comment_content",
@@ -506,7 +510,7 @@ def github(request, *args, **kwargs):
     
     sha, signature = signature.split('=')
     today = time.strftime("%Y-%m-%d", time.localtime(time.time()))
-   
+
     
     hashhex = hmac.new(settings.SHA1_STR.encode("utf-8"), request.body, digestmod='sha1').hexdigest() 
     print(hashhex)
