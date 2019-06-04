@@ -230,7 +230,7 @@ def article(request, *args, **kwargs):
     articles = models.Article.objects.filter(article_blog=kwargs["article_blog"]).all()
     pre = None
     after = None
-    
+
     for i in range(0, len(articles)-1):
         if articles[i].article_id == int(kwargs["article_id"]):
             if i != 0:
@@ -254,7 +254,7 @@ def article(request, *args, **kwargs):
     content = mark_safe(markdown(article[0]["articledetail__articledeatail_content"], extensions=[myext]))
     # content = mark_safe(markdown(article[0]["articledetail__articledeatail_content"]))
 
-    comments = models.Comment.objects.filter(comment_article=1).values(
+    comments = models.Comment.objects.filter(comment_article=kwargs["article_id"]).values(
         "comment_id",
         "comment_content",
         "comment_create_time",
