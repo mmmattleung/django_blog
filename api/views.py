@@ -33,7 +33,7 @@ def index(request):
         "userinfo_speciality",
         "blog__blog_id"
     ).first()
-
+    # 
     articles = models.Article.objects.filter(article_blog=1).all().order_by("-article_create_time")[:5]
 
     categorys = models.Category.objects.filter(category_blog=1).values(
