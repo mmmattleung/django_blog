@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'repository',
     'api',
-    # 'rbac_permission',
+    'rbac',
 ]
 
 MIDDLEWARE = [
