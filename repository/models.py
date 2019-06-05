@@ -131,7 +131,8 @@ class Article(models.Model):
         (1, "Python"),
         (2, "Data Structure And Algorithm"),
         (3, "Marx's philosophy"),
-        (4, "Others"),
+        (4, "Buddhism"),
+        (5, "Others"),
     ]
 
     article_type_id = models.IntegerField(choices=type_choices, default=None)
