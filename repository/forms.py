@@ -61,3 +61,36 @@ class RegisterFrom(Form):
         if p1 == p2:
             return self.cleaned_data
         self.add_error("userinfo_password2", ValidationError('密码不一致'))
+
+
+class LoginForm(Form):
+    userinfo_name = fields.CharField(
+        widget=widgets.TextInput(attrs={
+            "class": 'form-control',
+            "placeholder": "Name"
+        })
+    )
+    userinfo_password = fields.CharField(
+        widget=widgets.PasswordInput(attrs={
+            "class": 'form-control',
+            "placeholder": "Password"
+        })
+    )
+    code = fields.CharField(
+        widget=widgets.TextInput(attrs={
+            'class': 'form-control',
+            'style': 'display: inline-block; width: 170px',
+            'placeholder': 'Check Code'
+        })
+    )
+
+    def __init__(self, request, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.request = request
+
+    def clean_code(self):
+        input_code = self.cleaned_data['code']
+        session_code = self.request.session.get('code')
+        if input_code.upper() == session_code.upper():
+            return input_code
+        raise ValidationError('验证码错误')

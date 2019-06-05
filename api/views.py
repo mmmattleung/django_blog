@@ -9,11 +9,13 @@ from django.db.models import functions
 from django.utils.html import mark_safe
 from django.shortcuts import render, HttpResponse, redirect
 
+from rbac.service import initial_permission
 from utils import pager, markdown_ex
 from repository import models
+from rbac import models as rbac_models
 from markdown import markdown
 from utils import random_check_code
-from repository.forms import RegisterFrom
+from repository.forms import RegisterFrom, LoginForm
 
 
 
@@ -32,7 +34,7 @@ def index(request):
         "blog__blog_id"
     ).first()
 
-    articles = models.Article.objects.filter(article_blog=1).all()[:5]
+    articles = models.Article.objects.filter(article_blog=1).all().order_by("-article_create_time")[:5]
 
     categorys = models.Category.objects.filter(category_blog=1).values(
         "category_id",
@@ -154,7 +156,21 @@ def filter(request, *args, **kwargs):
 
 
 def login(request, *args, **kwargs):
-    return render(request, 'login.html')
+    if request.method == "GET":
+        form = LoginForm(request)
+        return render(request, 'login.html', {"form": form})
+    else:
+        form = LoginForm(request, request.POST)
+        if form.is_valid():
+            username = request.POST.get('userinfo_name')
+            password = request.POST.get('userinfo_password')
+            user = rbac_models.User.objects.filter(username=username, password=password).first()
+            if user:
+                initial_permission(request, user)
+            return render(request, "backend_index.html")
+        else:
+            print(form.errors)
+            return render(request, 'login.html', {"form": form})
 
 
 def check_code(request, *args, **kwargs):
@@ -230,7 +246,7 @@ def article(request, *args, **kwargs):
     articles = models.Article.objects.filter(article_blog=kwargs["article_blog"]).all()
     pre = None
     after = None
-    
+
     for i in range(0, len(articles)):
         if articles[i].article_id == int(kwargs["article_id"]):
             if i != 0:
@@ -507,14 +523,14 @@ def github(request, *args, **kwargs):
     signature = request.META.get('HTTP_X_HUB_SIGNATURE')
     print(request.META)
     print(request.body)
-    
+
     sha, signature = signature.split('=')
     today = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 
-    
-    hashhex = hmac.new(settings.SHA1_STR.encode("utf-8"), request.body, digestmod='sha1').hexdigest() 
+
+    hashhex = hmac.new(settings.SHA1_STR.encode("utf-8"), request.body, digestmod='sha1').hexdigest()
     print(hashhex)
-    if hmac.compare_digest(hashhex, signature): 
+    if hmac.compare_digest(hashhex, signature):
         a = "git --git-dir=/home/django_blog/.git  --work-tree=/home/django_blog pull"
         multi_task = subprocess.Popen(
 	        a, shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
