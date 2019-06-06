@@ -121,7 +121,7 @@ class Article(models.Model):
     article_comment_count = models.IntegerField(default=0)
     article_up_count = models.IntegerField(default=0)
     article_down_count = models.IntegerField(default=0)
-    article_picture = models.ImageField(verbose_name="配图", upload_to="static/article_pic")
+    article_picture = models.ImageField(verbose_name="配图", upload_to="static/article_pic", blank=True, null=True)
     article_create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
     article_blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='blog_id')
@@ -132,7 +132,8 @@ class Article(models.Model):
         (2, "Data Structure And Algorithm"),
         (3, "Marx's philosophy"),
         (4, "Buddhism"),
-        (5, "Others"),
+        (5, "SICP"),
+        (6, "Others"),
     ]
 
     article_type_id = models.IntegerField(choices=type_choices, default=None)
@@ -142,6 +143,8 @@ class Article(models.Model):
         through='Article2Tag',
         through_fields=('article', 'tag'),
     )
+
+    article_sync_id = models.CharField(max_length=128, verbose_name="同步编号", blank=True, null=True, unique=True)
 
     def __str__(self):
         return "%s - %s" % (self.article_id, self.article_title)

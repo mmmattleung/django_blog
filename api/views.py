@@ -33,7 +33,7 @@ def index(request):
         "userinfo_speciality",
         "blog__blog_id"
     ).first()
-    # 
+    #
     articles = models.Article.objects.filter(article_blog=1).all().order_by("-article_create_time")[:5]
 
     categorys = models.Category.objects.filter(category_blog=1).values(
@@ -540,3 +540,10 @@ def github(request, *args, **kwargs):
         print("NO")
     return HttpResponse(123)
 
+
+def sync(request, *args, **kwargs):
+    from utils import sync_github
+    sync_github.get_git_data()
+
+    sync_github.process()
+    return HttpResponse("ok")

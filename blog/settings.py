@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'repository',
     'api',
     'rbac',
+    'wind_admin.apps.WindAdminConfig',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,44 @@ BASE_HOST = "http://www.mattleung.art"
 STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static/backend_static"),
 )
 ALLOWED_HOSTS = ["*"]
 SHA1_STR = "123"
+
+
+# ############################## Permission setting begin ##########################
+
+# session key for which permission have url
+RBAC_PERMISSION_URL_LIST_SESSION_KEY = 'rbac_permission_url_list_session_key'
+
+# session key for permission and menud dict
+RBAC_PERMISSION_MENU_DICT_SESSION_KEY = 'rbac_permission_menu_dict_session_key'
+
+# session key for list of permission's item
+RBAC_PERMISSION_LIST_SESSION_KEY = 'rbac_permission_list_session_key'
+
+# session key for menu list
+RBAC_MENU_LIST_SESSION_KEY = 'rbac_menu_list_session_key'
+
+# 免权限列表
+NO_AUTH_URL = [
+    '/*'
+    # '/test/login',
+    # '/test/logout',
+    # '/api/*',
+]
+
+RBAC_NO_SESSION_MSG = 'SESSION中无权限信息，请重新登录'
+
+RBAC_ERROR_MSG = '无权访问'
+
+RBAC_URL_PATTERN = '^{0}$'
+
+RBAC_DEBUG = True
+
+RBAC_CSS = 'default'
+
+RBAC_JS = 'default'
+
+# ############################## Permission setting end ##########################

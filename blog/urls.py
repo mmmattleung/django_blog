@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from api import views
+from wind_admin import wind_core
 
 urlpatterns = [
+    url(r'^wind/', wind_core.site.urls),
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
     url(r'^about/', views.about),
@@ -31,6 +33,7 @@ urlpatterns = [
     url(r'^(?P<article_blog>\d+)/(?P<article_id>\d+)', views.article),
     url(r'^comment/', views.comment),
     url(r'^(?P<article_blog>\d+)/blog/', views.blog_3colums, name="blog"),
+    url(r'^sync/', views.sync),
     url(r'^(\w+)/', views.blog),
     url(r'^$', views.index),
 

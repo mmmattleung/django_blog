@@ -1,0 +1,10 @@
+{% extends 'backend_layout_1.html' %}
+{% load result_list %}
+
+{% block body %}
+    <h1>TEST</h1>
+    <div class="row  border-bottom white-bg dashboard-header" style="overflow:scroll;">
+
+        {% get_result base_dir result_list list_display wind_object %}
+    </div>
+{% endblock %}
