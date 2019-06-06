@@ -74,6 +74,8 @@ def process():
 
 
 def write_to_db(model_class, data_dict):
+    print(data_dict)
+    print("---------")
     new_data_id = model_class.objects.create(**data_dict)
     return new_data_id
 
