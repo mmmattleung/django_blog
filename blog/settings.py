@@ -164,10 +164,20 @@ RBAC_MENU_LIST_SESSION_KEY = 'rbac_menu_list_session_key'
 
 # 免权限列表
 NO_AUTH_URL = [
-    '/*'
+    # '/*'
     # '/test/login',
     # '/test/logout',
     # '/api/*',
+    "/index",
+    "/about",
+    "/galleries.html",
+    "/category/\d+-\d+",
+    "/\d+/((category)|(tag)|(time))/\w+-*\w*",
+    "/login",
+    "/check_code/",
+    "/\d+/\d+",
+    "/comment",
+    "/\d+/blog",
 ]
 
 RBAC_NO_SESSION_MSG = 'SESSION中无权限信息，请重新登录'
