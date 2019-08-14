@@ -10,7 +10,7 @@ from django.utils.html import mark_safe
 from django.shortcuts import render, HttpResponse, redirect
 
 from rbac.service import initial_permission
-from utils import pager, markdown_ex
+from utils import pager_for_blog as pager, markdown_ex
 from repository import models
 from rbac import models as rbac_models
 from markdown import markdown
