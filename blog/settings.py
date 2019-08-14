@@ -179,6 +179,7 @@ NO_AUTH_URL = [
     "/\d+/\d+",
     "/comment",
     "/\d+/blog",
+    "/",
 ]
 
 RBAC_NO_SESSION_MSG = 'SESSION中无权限信息，请重新登录'
