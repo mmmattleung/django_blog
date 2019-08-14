@@ -1,10 +1,83 @@
 {% extends 'backend_layout_1.html' %}
 {% load result_list %}
 
+{% block css %}
+ <style>
+    .comb-search a{
+        display: inline-block;
+        border: 1px solid #dddddd;
+        padding: 5px 8px;
+        margin: 5px;
+    }
+    .comb-search a.active{
+        background-color: #2aabd2;
+        color: white;
+    }
+    .comb-search .all-area{
+{#        display: inline;#}
+        float: left;
+    }
+    .comb-search .others-area{
+{#        display: inline;#}
+{#        float: right;#}
+        padding-left: 70px;
+    }
+    .comb-search{
+         margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
 {% block body %}
     <h1>TEST</h1>
-    <div class="row  border-bottom white-bg dashboard-header" style="overflow:scroll;">
 
+    <form method="POST">
+    {% csrf_token %}
+    <div class="row  border-bottom white-bg dashboard-header" style="overflow:scroll;">
+        {% if filter_list %}
+        <div class="comb-search">
+            <h3>组合搜索</h3>
+            {% for fl in filter_list %}
+                <div>
+                    {% for row in fl %}
+                        {{ row }}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if action_list %}
+            <div>
+                <select name="action" class="form-control" style="display: inline-block;width: 200px;" >
+                    {% for item in action_list %}
+                        <option value="{{ item.name }}">{{ item.text }}</option>
+                    {% endfor %}
+
+                </select>
+                <input type="submit" class="btn btn-w-m btn-primary" value="执行" />
+            </div>
+        {% endif %}
+
+        <div style="margin-bottom: 10px; margin-left: 20px;">
+            <a href="{{ add_url }}" class="btn btn-w-m btn-primary">添加</a>
+        </div>
         {% get_result base_dir result_list list_display wind_object %}
+
+        {% if ps %}
+            <div class="btn-group" style="margin-bottom: 30px">
+            {% if ps.has_previous %}
+                <a href="{{ ps.previous_url }}" class="btn btn-white">上一页</a>
+            {% endif %}
+
+            {{ ps.diy_range|safe }}
+
+            {% if ps.has_next %}
+                <a href="{{ ps.next_url }}" class="btn btn-white">下一页</a>
+            {% endif %}
+            </div>
+        {% endif %}
     </div>
+    </form>
+
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'backend_layout_1.html' %}
+
+
+{% block body %}
+    <div class="row  border-bottom white-bg dashboard-header" style="margin-bottom:30px; overflow:scroll;">
+        <form id="aaa" method="POST" enctype="multipart/form-data" novalidate style="width: 80%">
+            {% csrf_token %}
+            {{ form.media }}
+{#            {{ form.as_p }}#}
+            {% for row in form %}
+                <div class="form-group">
+                    <label>{{ row.label }}</label>
+                    {{ row }} {{ row.errors.0 }}
+                </div>
+                <div class="hr-line-dashed"></div>
+            {% endfor %}
+            <input type="submit" value="提交" class="btn btn-sm btn-primary m-t-n-xs"/>
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+{#    <script>#}
+{#        $(document).ready(function() {#}
+{#            console.log($("#aaa"));#}
+{#            console.log($("#aaa").find("*"));#}
+{#            $("#aaa").find("*").addClass("form-control");#}
+{#        });#}
+{#    </script>#}
+{% endblock %}

@@ -1,0 +1,16 @@
+<form id="aaa" method="POST" enctype="multipart/form-data" novalidate style="width: 80%;">
+    {% csrf_token %}
+    {{ f.media }}
+    {% for row in form %}
+        <div class="form-group">
+            <label>{{ row.item.label }}</label>
+            {{ row.item }} {{ row.item.errors.0 }}
+            {% if row.is_popup %}
+                <a onclick="PopUp('{{ row.pop_url }}?popup={{ row.item.auto_id }}')">添加</a>
+            {% endif %}
+        </div>
+        <div class="hr-line-dashed"></div>
+    {% endfor %}
+    <input type="submit" value="提交" class="btn btn-sm btn-primary m-t-n-xs"/>
+</form>
+

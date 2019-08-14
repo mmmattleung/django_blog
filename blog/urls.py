@@ -28,13 +28,14 @@ urlpatterns = [
     # url(r'^category/(?P<article_blog>\d+)-(?P<article_category>\d+)', views.category),
     url(r'^(?P<article_blog>\d+)/(?P<filter>((category)|(tag)|(time)))/(?P<id>\w+-*\w*)', views.filter, name="filter"),
     url(r'^login/', views.login),
+    url(r'^logout/', views.logout),
     url(r'^check_code/', views.check_code),
     url(r'^register/', views.register),
     url(r'^(?P<article_blog>\d+)/(?P<article_id>\d+)', views.article),
     url(r'^comment/', views.comment),
     url(r'^(?P<article_blog>\d+)/blog/', views.blog_3colums, name="blog"),
     url(r'^sync/', views.sync),
-    url(r'^(\w+)/', views.blog),
-    url(r'^$', views.index),
+    # url(r'^(\w+)/', views.blog),
+    # url(r'^$', views.index),
 
 ]

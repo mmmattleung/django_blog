@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'api',
     'rbac',
     'wind_admin.apps.WindAdminConfig',
+    'mdeditor'
 ]
 
 MIDDLEWARE = [
@@ -182,3 +183,9 @@ RBAC_CSS = 'default'
 RBAC_JS = 'default'
 
 # ############################## Permission setting end ##########################
+
+
+AVATAR_DIRS = {
+    "userinfo_avatar": "static/avatar",
+    "userinfo_avatar_full": "static/avatar"
+}

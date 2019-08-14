@@ -1,22 +1,26 @@
 from django.db import models
-
+from mdeditor.fields import MDTextField
+from django.utils.html import format_html
 
 
 class UserInfo(models.Model):
     """
     用户表
     """
-    userinfo_id = models.BigAutoField(primary_key=True)
+    userinfo_id = models.BigAutoField(primary_key=True, verbose_name="ID")
     userinfo_name = models.CharField(verbose_name='用户名', max_length=32, unique=True)
     userinfo_password = models.CharField(verbose_name='密码', max_length=64)
     userinfo_nickname = models.CharField(verbose_name='昵称', max_length=32)
     userinfo_email = models.EmailField(verbose_name='邮箱', unique=True)
-    userinfo_avatar = models.ImageField(verbose_name='头像')
-    userinfo_avatar_full = models.ImageField(verbose_name='头像', blank=True, null=True)
+    userinfo_avatar = models.ImageField(verbose_name='头像', upload_to="static/avatar")
+    userinfo_avatar_full = models.ImageField(verbose_name='头像', blank=True, null=True, upload_to="static/avatar")
 
     userinfo_create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
+    # userinfo_fans = models.ForeignKey(to='UserFans', to_field='userfan_user')
     userinfo_fans = models.ManyToManyField(verbose_name='粉丝们',
+                                  null=True,
+                                  blank=True,
                                   to='UserInfo',
                                   through='UserFans',
                                   related_name='f',
@@ -29,6 +33,12 @@ class UserInfo(models.Model):
 
     def __str__(self):
         return "%s - %s" % (self.userinfo_id, self.userinfo_name)
+
+    def text_username(self):
+        return self.userinfo_name
+
+    def value_username(self):
+        return self.userinfo_name
 
 
 class Blog(models.Model):
@@ -43,6 +53,7 @@ class Blog(models.Model):
 
     def __str__(self):
         return "%s - %s" % (self.blog_title, self.blog_site)
+
 
 class UserFans(models.Model):
     """
@@ -69,13 +80,16 @@ class Category(models.Model):
     def __str__(self):
         return "%s - %s" % (self.category_id, self.category_title)
 
+
 class ArticleDetail(models.Model):
     """
     文章详细表
     """
-    articledeatail_content = models.TextField(verbose_name='文章内容', )
+    articledeatail_content = MDTextField(blank=True, null=True, verbose_name='文章内容')
 
     articledeatail_article = models.OneToOneField(verbose_name='所属文章', to='Article', to_field='article_id')
+
+
 
 
 class UpDown(models.Model):
@@ -113,6 +127,7 @@ class Tag(models.Model):
     def __str__(self):
         return "%s - %s" % (self.tag_id, self.tag_title)
 
+
 class Article(models.Model):
     article_id = models.BigAutoField(primary_key=True)
     article_title = models.CharField(verbose_name='文章标题', max_length=128)
@@ -148,7 +163,6 @@ class Article(models.Model):
 
     def __str__(self):
         return "%s - %s" % (self.article_id, self.article_title)
-
 
 
 class Article2Tag(models.Model):

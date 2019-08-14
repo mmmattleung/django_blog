@@ -167,10 +167,15 @@ def login(request, *args, **kwargs):
             user = rbac_models.User.objects.filter(username=username, password=password).first()
             if user:
                 initial_permission(request, user)
-            return render(request, "backend_index.html")
+            return render(request, "backend_layout_1.html", {"user": user})
         else:
             print(form.errors)
             return render(request, 'login.html', {"form": form})
+
+
+def logout(request, *args, **kwargs):
+    request.session.delete()
+    return redirect('/login/')
 
 
 def check_code(request, *args, **kwargs):
@@ -190,6 +195,8 @@ def register(request, *args, **kwargs):
         print("POST")
         obj = RegisterFrom(request, request.POST, request.FILES)
         if obj.is_valid():
+
+            models.UserInfo.objects.create(**obj.cleaned_data)
             return HttpResponse("OK")
         else:
             print(obj.errors)
