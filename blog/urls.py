@@ -13,10 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from api import views
 from wind_admin import wind_core
+
+from rest_framework.documentation import include_docs_urls
+from rest_framework.authtoken import views as dfr_views
+from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     url(r'^wind/', wind_core.site.urls),
@@ -36,6 +40,20 @@ urlpatterns = [
     url(r'^(?P<article_blog>\d+)/blog/', views.blog_3colums, name="blog"),
     url(r'^sync/', views.sync),
     # url(r'^(\w+)/', views.blog),
+
+
+
+    url(r'api/', include('api.urls', namespace='api-repository')),
+    url(r'docs/', include_docs_urls(title="ydyl")),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', dfr_views.obtain_auth_token), # drf 自带
+    url(r'^jwt-auth/', obtain_jwt_token),
+    # url(r'^sentry-debug/', trigger_error),
+
+
+
+
+
     url(r'^$', views.index),
 
 ]

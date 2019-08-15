@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -37,11 +37,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'repository',
-    'api',
+    # 'repository',
+    # 'api',
     'rbac',
     'wind_admin.apps.WindAdminConfig',
-    'mdeditor'
+    'mdeditor',
+    'repository.apps.RepositoryConfig',
+    'api.apps.ApiConfig',
+
+    
+    # 'repository.apps.RepositoryConfig',
+    # 'api.apps.ApiConfig',
+    'rest_framework',
+    # 'guardian',
+    'rest_framework.authtoken',
+    'coreapi',
+    'crispy_forms',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -167,8 +179,9 @@ RBAC_MENU_LIST_SESSION_KEY = 'rbac_menu_list_session_key'
 NO_AUTH_URL = [
     # '/*'
     # '/test/login',
-    # '/test/logout',
-    # '/api/*',
+    '/admin/*',
+    '/api/*',
+    '/docs/*',
     "/index",
     "/about",
     "/galleries.html",
@@ -200,4 +213,56 @@ RBAC_JS = 'default'
 AVATAR_DIRS = {
     "userinfo_avatar": "static/avatar",
     "userinfo_avatar_full": "static/avatar"
+}
+
+
+# YDYL API
+AUTHENTICATION_BACKENDS = (
+    'api.my_auth.CustomBackend',
+)
+
+AUTH_USER_MODEL = 'repository.UserProfile'
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # "PAGE_SIZE": 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
+
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '60/minute',
+        'user': '60/minute'
+    }
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
+
+REST_FRAMEWORK_EXTENSIONS = {
+    # 'DEFAULT_OBJECT_CACHE_KEY_FUNC':
+    #   'rest_framework_extensions.utils.default_object_cache_key_func',
+    # 'DEFAULT_LIST_CACHE_KEY_FUNC':
+    #   'rest_framework_extensions.utils.default_list_cache_key_func',
+    # 'DEFAULT_CACHE_RESPONSE_TIMEOUT': 5,
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
 }
