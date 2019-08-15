@@ -21,10 +21,6 @@ Faker==1.0.6
 future==0.17.1
 gitdb2==2.0.5
 GitPython==2.1.11
-
-
-
-
 httplib2==0.13.1
 idna==2.8
 itypes==1.1.0
@@ -51,4 +47,5 @@ sqlparse==0.3.0
 text-unidecode==1.2
 uritemplate==3.0.0
 urllib3==1.25.3
+XlsxWriter==1.1.8
 XlsxWriter==1.1.8
