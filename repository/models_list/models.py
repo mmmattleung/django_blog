@@ -84,6 +84,8 @@ class Doctor(models.Model):
     doc_workage = models.IntegerField(blank=True, null=True, verbose_name='工龄')
     doc_otherid = models.CharField(max_length=128, blank=True, null=True, verbose_name='第三方ID')
 
+    def __str__(self):
+        return "{}-{}".format(self.doc_id, self.doc_name)
 
 class HospitalToDoctorToDepartment(models.Model):
     open_choices = ((0, "闭诊"), (1, "开诊"))
@@ -122,6 +124,9 @@ class Patient(models.Model):
     pat_allergy = models.CharField(max_length=16, blank=True, null=True, )
     pat_otherid = models.CharField(max_length=128, blank=True, null=True, )
     pat_scard = models.CharField(max_length=64, blank=True, null=True, )
+
+    def __str__(self):
+        return "{}-{}".format(self.pat_id, self.pat_name)
 
 
 class HosipitalToPatient(models.Model):
