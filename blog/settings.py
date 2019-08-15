@@ -179,6 +179,7 @@ RBAC_MENU_LIST_SESSION_KEY = 'rbac_menu_list_session_key'
 NO_AUTH_URL = [
     # '/*'
     # '/test/login',
+    "/sync/",
     '/admin/*',
     '/api/*',
     '/docs/*',
