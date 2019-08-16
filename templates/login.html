@@ -31,11 +31,11 @@
             <form class="m-t" role="form" action="/login/" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
-                    {{ form.userinfo_name }}{{ obj.errors.userinfo_name.0 }}
+                    {{ form.userinfo_name }}{{ obj }}
 {#                    <input type="email" class="form-control" placeholder="Username" required="">#}
                 </div>
                 <div class="form-group">
-                    {{ form.userinfo_password }}{{ obj.errors.userinfo_password.0 }}
+                    {{ form.userinfo_password }}
 {#                    <input type="password" class="form-control" placeholder="Password" required="">#}
                 </div>
                 <div class="form-group">

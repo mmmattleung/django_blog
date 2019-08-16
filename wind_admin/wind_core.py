@@ -67,6 +67,7 @@ class BaseWind:
 
     def changelist_view(self, request):
         # 保留 GET 参数
+        self.request = request
         param_dict = QueryDict(mutable=True)
         condition = {}
         if request.GET:
@@ -160,6 +161,7 @@ class BaseWind:
         return urlpatterns
 
     def add_view(self, request):
+        self.request = request
         if request.method == "GET":
             # form = self.get_add_or_edit_model_form(request)
             form = self.get_add_or_edit_model_form()()
@@ -175,7 +177,37 @@ class BaseWind:
             # print(model_form_obj.fields["userfan_user"].choices)
             # print(model_form_obj.fields["userfan_follower"].choices)
             if model_form_obj.is_valid():
-                model_form_obj.save()
+                obj = model_form_obj.save(commit=False)
+                obj.save()
+                from django.db.models.fields.related_descriptors import ManyToManyDescriptor
+                for key, value in form.cleaned_data.items():
+                    if isinstance(getattr(self.model_class, key), ManyToManyDescriptor):
+                        print(key, value)
+                        if key == "tags":
+                            data_dict = {
+                                "article": obj,
+                                "tag": None,
+                            }
+                        m2m_model = getattr(self.model_class, key).through
+                        for item in value:
+                            data_dict["tag"] = item
+                            m2m_model.objects.create(**data_dict)
+
+                # model_form_obj.save()
+                # obj = model_form_obj.save(commit=False)
+                # obj.save()
+                #
+                # from django.db.models.fields.related_descriptors import ManyToManyDescriptor
+                # for key, value in form.cleaned_data.items():
+                #     if isinstance(getattr(self.model_class, key), ManyToManyDescriptor):
+                #         print(key, value)
+                #         m2m_model = getattr(self.model_class, key).through
+                #         for item in value:
+                #             m2m_model.objects.filter(userfan_user=obj).all().delete()
+                #             fans = m2m_model(userfan_user=obj, userfan_follower=item)
+                #             fans.save()
+
+
                 # process many to many field
                 # for item in model_form_obj:
                 #     print(type(item), item, item.field, type(item.field))
@@ -191,7 +223,7 @@ class BaseWind:
                 # for key, value in many_to_many_dict.items():
                 #     eval("print(self.model_class." + key + ".through)")
                 #
-                obj = self.model_class.objects.create(**model_form_obj.cleaned_data)
+                # obj = self.model_class.objects.create(**model_form_obj.cleaned_data)
                 # print(many_to_many_dict)
                 # for key, value in many_to_many_dict.items():
                 #     for i in value:
@@ -218,6 +250,7 @@ class BaseWind:
         return render(request, "add.html", context)
 
     def change_view(self, request, pk):
+        self.request = request
         obj = self.model_class.objects.filter(pk=pk).first()
         dict_of_obj = model_to_dict(obj)
         if not obj:
@@ -292,6 +325,7 @@ class BaseWind:
         return render(request, 'edit.html', context)
 
     def delete_view(self, request, pk):
+        self.request = request
         obj = self.model_class.objects.filter(id=pk).delete()
         param_dict = QueryDict(mutable=True)
         base_add_url = reverse("{}:{}_{}_changelist".format(self.site_object.name_space, self.app_label, self.model_name))

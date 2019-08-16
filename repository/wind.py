@@ -1,4 +1,5 @@
 from django import forms
+from django.http import QueryDict
 from django.utils.safestring import mark_safe
 from repository.models import ArticleDetail
 from repository.forms import UserInfoForm, UserFansForm
@@ -13,9 +14,18 @@ class UserInfoWind(wind_core.BaseWind):
         if is_header:
             return "操作"
         else:
-            name = "{0}:{1}_{2}_change".format(self.site_object.name_space, self.model_class._meta.app_label, self.model_class._meta.model_name)
-            url = reverse(name, args=(obj.pk,))
-            return mark_safe("<a href='{0}'>编辑</a>".format(url))
+            param_dict = QueryDict(mutable=True)
+            if self.request.GET:
+                param_dict['_changelistfilter'] = self.request.GET.urlencode()
+
+            change_base_url = reverse(
+                "{}:{}_{}_change".format(self.site_object.name_space, self.app_label, self.model_name), args=(obj.pk,))
+            change_url = "{}?{}".format(change_base_url, param_dict.urlencode())
+            del_base_url = reverse("{}:{}_{}_delete".format(self.site_object.name_space, self.app_label, self.model_name),
+                                   args=(obj.pk,))
+            del_url = "{}?{}".format(del_base_url, param_dict.urlencode())
+            tpl = "<a href='{}'>编辑</a> | <a href='{}'>删除</a>".format(change_url, del_url)
+            return mark_safe(tpl)
 
     def checkbox(self, obj=None, is_header=False):
         if is_header:
@@ -94,9 +104,19 @@ class ArticleWind(wind_core.BaseWind):
         if is_header:
             return "操作"
         else:
-            name = "{0}:{1}_{2}_change".format(self.site_object.name_space, self.model_class._meta.app_label, self.model_class._meta.model_name)
-            url = reverse(name, args=(obj.pk,))
-            return mark_safe("<a href='{0}'>编辑</a>".format(url))
+            param_dict = QueryDict(mutable=True)
+            if self.request.GET:
+                param_dict['_changelistfilter'] = self.request.GET.urlencode()
+
+            change_base_url = reverse(
+                "{}:{}_{}_change".format(self.site_object.name_space, self.app_label, self.model_name), args=(obj.pk,))
+            change_url = "{}?{}".format(change_base_url, param_dict.urlencode())
+            del_base_url = reverse(
+                "{}:{}_{}_delete".format(self.site_object.name_space, self.app_label, self.model_name),
+                args=(obj.pk,))
+            del_url = "{}?{}".format(del_base_url, param_dict.urlencode())
+            tpl = "<a href='{}'>编辑</a> | <a href='{}'>删除</a>".format(change_url, del_url)
+            return mark_safe(tpl)
 
     def checkbox(self, obj=None, is_header=False):
         if is_header:
@@ -133,10 +153,19 @@ class ArticleDetialWind(wind_core.BaseWind):
         if is_header:
             return "操作"
         else:
-            name = "{0}:{1}_{2}_change".format(self.site_object.name_space, self.model_class._meta.app_label,
-                                               self.model_class._meta.model_name)
-            url = reverse(name, args=(obj.pk,))
-            return mark_safe("<a href='{0}'>编辑</a>".format(url))
+            param_dict = QueryDict(mutable=True)
+            if self.request.GET:
+                param_dict['_changelistfilter'] = self.request.GET.urlencode()
+
+            change_base_url = reverse(
+                "{}:{}_{}_change".format(self.site_object.name_space, self.app_label, self.model_name), args=(obj.pk,))
+            change_url = "{}?{}".format(change_base_url, param_dict.urlencode())
+            del_base_url = reverse(
+                "{}:{}_{}_delete".format(self.site_object.name_space, self.app_label, self.model_name),
+                args=(obj.pk,))
+            del_url = "{}?{}".format(del_base_url, param_dict.urlencode())
+            tpl = "<a href='{}'>编辑</a> | <a href='{}'>删除</a>".format(change_url, del_url)
+            return mark_safe(tpl)
 
     def checkbox(self, obj=None, is_header=False):
         if is_header:

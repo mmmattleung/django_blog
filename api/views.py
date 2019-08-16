@@ -165,9 +165,13 @@ def login(request, *args, **kwargs):
             username = request.POST.get('userinfo_name')
             password = request.POST.get('userinfo_password')
             user = rbac_models.User.objects.filter(username=username, password=password).first()
+            print(user)
             if user:
                 initial_permission(request, user)
-            return render(request, "backend_layout_1.html", {"user": user})
+                return render(request, "backend_layout_1.html", {"user": user})
+            else:
+
+                return render(request, 'login.html', {"form": form, "obj":"账号或密码错误"})
         else:
             print(form.errors)
             return render(request, 'login.html', {"form": form})
