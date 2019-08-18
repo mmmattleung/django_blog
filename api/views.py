@@ -75,7 +75,7 @@ def filter(request, *args, **kwargs):
         del kwargs["id"]
 
 
-        articles = models.Article.objects.filter(article_blog=kwargs["article_blog"], article_category=category_id).all()
+        articles = models.Article.objects.filter(article_blog=kwargs["article_blog"], article_category=category_id).order_by("-article_create_time").all()
         category_info = models.Category.objects.filter(category_id=category_id).first()
 
         title_info = {
@@ -100,7 +100,7 @@ def filter(request, *args, **kwargs):
         kwargs["article2tag__tag"] = kwargs["id"]
         del kwargs["id"]
 
-        articles = models.Article.objects.filter(**kwargs).all()
+        articles = models.Article.objects.filter(**kwargs).order_by("-article_create_time").all()
 
         tags = models.Article2Tag.objects.filter(
             article__article_blog=kwargs["article_blog"],
@@ -135,7 +135,7 @@ def filter(request, *args, **kwargs):
             select={"t": "date_format(article_create_time,'%%Y-%%m')"},
             where=["date_format(article_create_time,'%%Y-%%m')=%s", ],
             params=[time, ]
-        ).all()
+        ).order_by("-article_create_time").all()
 
         title_info = {
             "title": time,

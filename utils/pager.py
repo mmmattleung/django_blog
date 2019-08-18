@@ -45,7 +45,7 @@ def get_pager(self, request, articles, pages):
     def _count_pages(p, current_page):
         if current_page - pages <= 0:
             begin = 1
-            if p.num_pages < pages:
+            if p.num_pages <= pages:
                 end = p.num_pages + 1
             else:
                 end = pages * 2 + 1
@@ -58,6 +58,7 @@ def get_pager(self, request, articles, pages):
         return range(begin, end)
 
     diy_range = _count_pages(p, current_page)
+    print(diy_range)
 
     def _set_html_tags(ps, diy_range):
         range_str = ""

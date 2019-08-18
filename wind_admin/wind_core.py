@@ -12,6 +12,7 @@ from django.forms.models import model_to_dict
 from django.shortcuts import render, HttpResponse, redirect
 
 from repository.forms import LoginForm
+from repository import models
 from rbac import models as rbac_models
 from blog import settings
 from rbac.service import initial_permission
@@ -308,10 +309,11 @@ class BaseWind:
                 for key, value in form.cleaned_data.items():
                     if isinstance(getattr(self.model_class, key), ManyToManyDescriptor):
                         m2m_model = getattr(self.model_class, key).through
-                        for item in value:
-                            m2m_model.objects.filter(userfan_user=obj).all().delete()
-                            fans = m2m_model(userfan_user=obj, userfan_follower=item)
-                            fans.save()
+                        if isinstance(m2m_model, models.Article2Tag):
+                            for item in value:
+                                m2m_model.objects.filter(userfan_user=obj).all().delete()
+                                fans = m2m_model(userfan_user=obj, userfan_follower=item)
+                                fans.save()
 
                 base_list_url = reverse(
                     "{2}:{0}_{1}_changelist".format(self.app_label, self.model_name, self.site_object.name_space))
