@@ -37,19 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'repository',
-    # 'api',
+    'repository',
+    'api',
     'rbac',
     'wind_admin.apps.WindAdminConfig',
     'mdeditor',
-    'repository.apps.RepositoryConfig',
-    'api.apps.ApiConfig',
-
-    
     # 'repository.apps.RepositoryConfig',
     # 'api.apps.ApiConfig',
+    # 'repository.apps.RepositoryConfig',
+    # 'api.apps.ApiConfig',
+
     'rest_framework',
-    # 'guardian',
+    'guardian',
     'rest_framework.authtoken',
     'coreapi',
     'crispy_forms',
@@ -136,13 +135,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -190,6 +189,7 @@ NO_AUTH_URL = [
     "/category/\d+-\d+",
     "/\d+/((category)|(tag)|(time))/\w+-*\w*",
     "/login",
+    "/static/*",
     "/check_code/",
     "/\d+/\d+",
     "/comment",
