@@ -190,6 +190,7 @@ NO_AUTH_URL = [
     "/\d+/((category)|(tag)|(time))/\w+-*\w*",
     "/login",
     "/static/*",
+    "/\d+/static/*",
     "/check_code/",
     "/\d+/\d+",
     "/comment",
