@@ -43,18 +43,35 @@ def get_pager(self, request, articles, pages):
     _set_next_pre_url(ps)
 
     def _count_pages(p, current_page):
-        if current_page - pages <= 0:
+        print(current_page, pages, p.num_pages)
+        # 1 - 5 页
+        if current_page - pages < 0:
             begin = 1
-            if p.num_pages <= pages:
+            if p.num_pages >= pages:
+                end = pages + 1
+            else:
+                end = p.num_pages + 1
+        # 5 - ... 页
+        elif current_page >= pages:
+            if current_page + pages < p.num_pages:
+                begin = current_page
+                end = p.num_pages - (pages * 2 + 1)
+            # 6 + 5 > 8
+            elif current_page + pages >= p.num_pages:
+                begin = p.num_pages - pages + 1
                 end = p.num_pages + 1
             else:
-                end = pages * 2 + 1
-        elif current_page + pages > p.num_pages:
-            begin= p.num_pages - (pages * 2 + 1)
-            end = p.num_pages
-        else:
-            begin= current_page - pages
-            end = current_page + pages + 1
+                begin = current_page
+                end = current_page + pages + 1
+        # elif current_page + pages < p.num_pages:
+        #     begin = p.num_pages - (pages * 2 + 1)
+        #     end = p.num_pages
+        # elif pages * 2 <= p.num_pages:
+        #     begin = current_page - pages
+        #     end = current_page + pages + 1
+        # else:
+        #     begin = current_page - pages
+        #     end = pages + 1
         return range(begin, end)
 
     diy_range = _count_pages(p, current_page)
