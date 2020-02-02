@@ -19,10 +19,10 @@
                 <div class="card-border">
                     <div class="card-body">
                         <div class="card-category">
-                            <a href="single-post.html">{{ item.article_create_time }}</a>
+                            <a href="/{{ item.article_blog.blog_id }}/{{ item.article_id }}">{{ item.article_create_time }}</a>
                         </div>
                         <h5 class="card-title" style="width: 221.66px;height: 60px">
-                            <a href="single-post.html">{{ item.article_title }}</a>
+                            <a href="/{{ item.article_blog.blog_id }}/{{ item.article_id }}">{{ item.article_title }}</a>
                         </h5>
                     </div>
                 </div>

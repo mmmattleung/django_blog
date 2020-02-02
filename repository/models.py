@@ -159,7 +159,7 @@ class Article(models.Model):
 
     article_blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='blog_id')
     article_category = models.ForeignKey(verbose_name='文章类型', to='Category', to_field='category_id', null=True)
-
+    article_top = models.IntegerField(default=0)
     type_choices = [
         (1, "Python"),
         (2, "Data Structure And Algorithm"),
