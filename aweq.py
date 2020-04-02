@@ -25,3 +25,4 @@ f1 = Foo('a')
 # del f1.age
 # print(f1.age)
 print(f1.xxxxxxx)
+# asad
