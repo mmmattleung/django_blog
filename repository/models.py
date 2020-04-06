@@ -155,6 +155,7 @@ class Article(models.Model):
     article_up_count = models.IntegerField(default=0)
     article_down_count = models.IntegerField(default=0)
     article_picture = models.ImageField(verbose_name="配图", upload_to="static/article_pic", blank=True, null=True)
+    article_pic_cdn = models.ImageField(verbose_name="cdn配图", blank=True, null=True)
     article_create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
     article_blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='blog_id')

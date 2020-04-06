@@ -14,7 +14,8 @@
             <div class="card-masonry card-small">
             <div class="card">
                 <a href="/{{ item.article_blog.blog_id }}/{{ item.article_id }}">
-                    <img class="card-vertical-img" data-original="{{ base_dir }}/{{ item.article_picture }}" />
+<!--                    <img class="card-vertical-img" data-original="{{ base_dir }}/{{ item.article_picture }}" />-->
+                    <img class="card-vertical-img" src="{{ item.article_pic_cdn}}" />
                 </a>
                 <div class="card-border">
                     <div class="card-body">
@@ -51,17 +52,5 @@
 {% endblock %}
 
 {% block js %}
-<script>
-    $(function(){
-            console.log($("#eskimo-site-wrapper"));
-            $("img").lazyload({
-             container: $("#eskimo-site-wrapper"),
-             effect: "show",
-             event: "scroll",
-             placeholder:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
-             })
-    });
-</script>
-
 
 {% endblock %}
