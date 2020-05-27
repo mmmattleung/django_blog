@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
     url(r'^about/', views.about),
+    url(r'^happy_birthday_to_caroline/', views.happy),
     url(r'^github/', views.github),
     url(r'^galleries.html/', views.galleries),
     # url(r'^category/(?P<article_blog>\d+)-(?P<article_category>\d+)', views.category),
