@@ -149,8 +149,8 @@ USE_TZ = False
 
 STATIC_ROOT = '/home/django_blog/nginx/static/'
 STATIC_URL = '/static/'
-# BASE_HOST = "http://www.mattleung.art"
-BASE_HOST = "http://127.0.0.1:8000"
+BASE_HOST = "http://www.mattleung.art"
+# BASE_HOST = "http://127.0.0.1:8000"
 STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
