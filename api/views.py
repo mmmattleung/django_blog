@@ -558,3 +558,8 @@ def sync(request, *args, **kwargs):
 
     sync_github.process()
     return HttpResponse("ok")
+
+def happy(request, *args, **kwargs):
+    return render(request, "single-post-test.html", {
+        "base_dir": settings.BASE_HOST
+    })
