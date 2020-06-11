@@ -25,7 +25,7 @@ from rest_framework.authtoken import views as dfr_views
 from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
-    url(r'^$',TemplateView.as_view(template_name='bdunion.txt')),
+    url(r'^$', views.index),
     url(r'^wind/', wind_core.site.urls),
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
