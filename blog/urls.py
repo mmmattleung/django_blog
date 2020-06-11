@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.generic import TemplateView
+
 from api import views
 from wind_admin import wind_core
 
@@ -23,6 +25,7 @@ from rest_framework.authtoken import views as dfr_views
 from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
+    url(r'^$',TemplateView.as_view(template_name='bdunion.txt')),
     url(r'^wind/', wind_core.site.urls),
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
