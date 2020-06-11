@@ -23,46 +23,43 @@ from repository.forms import RegisterFrom, LoginForm
 
 
 def index(request):
-    f = open("templates/bdunion.txt", 'rb')
-    res = FileResponse(f)
-    return res
-    # user_info = models.UserInfo.objects.filter(userinfo_id=1).values(
-    #     "userinfo_id",
-    #     "userinfo_name",
-    #     "userinfo_password",
-    #     "userinfo_nickname",
-    #     "userinfo_email",
-    #     "userinfo_avatar",
-    #     "userinfo_create_time",
-    #     "userinfo_fans",
-    #     "userinfo_introdution",
-    #     "userinfo_speciality",
-    #     "blog__blog_id"
-    # ).first()
-    #
-    # articles = models.Article.objects.filter(article_blog=1).all().order_by("-article_top", "-article_create_time")[:5]
-    #
-    # categorys = models.Category.objects.filter(category_blog=1).values(
-    #     "category_id",
-    #     "category_title",
-    # ).annotate(c=Count("article__article_id"))
-    #
-    # tags = models.Article2Tag.objects.filter(article__article_blog=1).values(
-    #     "tag",
-    #     "tag__tag_title",
-    # ).annotate(c=Count("article__article_id"))
-    #
-    # times = models.Article.objects.filter(article_blog=1).extra(
-    #     select={'c': "date_format(article_create_time,'%%Y-%%m')"}).values('c').annotate(ct=Count('article_id'))
-    #
-    # return render(request, 'index_test.html', {
-    #     "categorys": categorys,
-    #     "user_info": user_info,
-    #     "articles": articles,
-    #     "tags": tags,
-    #     "times": times,
-    #     "base_dir": settings.BASE_HOST
-    # })
+    user_info = models.UserInfo.objects.filter(userinfo_id=1).values(
+        "userinfo_id",
+        "userinfo_name",
+        "userinfo_password",
+        "userinfo_nickname",
+        "userinfo_email",
+        "userinfo_avatar",
+        "userinfo_create_time",
+        "userinfo_fans",
+        "userinfo_introdution",
+        "userinfo_speciality",
+        "blog__blog_id"
+    ).first()
+
+    articles = models.Article.objects.filter(article_blog=1).all().order_by("-article_top", "-article_create_time")[:5]
+
+    categorys = models.Category.objects.filter(category_blog=1).values(
+        "category_id",
+        "category_title",
+    ).annotate(c=Count("article__article_id"))
+
+    tags = models.Article2Tag.objects.filter(article__article_blog=1).values(
+        "tag",
+        "tag__tag_title",
+    ).annotate(c=Count("article__article_id"))
+
+    times = models.Article.objects.filter(article_blog=1).extra(
+        select={'c': "date_format(article_create_time,'%%Y-%%m')"}).values('c').annotate(ct=Count('article_id'))
+
+    return render(request, 'index_test.html', {
+        "categorys": categorys,
+        "user_info": user_info,
+        "articles": articles,
+        "tags": tags,
+        "times": times,
+        "base_dir": settings.BASE_HOST
+    })
 
 
 def category(request, *args, **kwargs):
