@@ -14,7 +14,7 @@ django-mdeditor==0.1.16
 django-redis==4.10.0
 django-rest-framework==0.1.0
 django-reversion==3.0.4
-djangorestframework==3.10.2
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 drf-extensions==0.5.0
 Faker==1.0.6
